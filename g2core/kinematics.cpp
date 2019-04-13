@@ -119,6 +119,15 @@ static void _inverse_kinematics(const float travel[], float joint[]) {
     //	for (uint8_t i=0; i<AXES; i++) {
     //		joint[i] = travel[i];
     //	}
+    #ifdef COREXY
+    #pragma message "CoreXY activated"
+    /* JPC: Corexy Kinematics test 
+    deltaA=deltaX+deltaY
+    deltaB=deltaX-deltaY
+    */
+    joint[0]=travel[0]+travel[1];
+    joint[1]=travel[0]-travel[1];
+    #endif
 }
 
 /*
@@ -158,4 +167,12 @@ void kn_forward_kinematics(const float steps[], float travel[]) {
             }
         }
     }
+    #ifdef COREXY
+    /* JPC: Corexy Kinematics test 
+    deltaX=1/2(deltaA+deltaB)
+    deltaY=1/2(deltaA-deltaB)
+    */
+    travel[0]=0.5 * ( (steps[0] * st_cfg.mot[0].units_per_step) + (steps[1] * st_cfg.mot[1].units_per_step) );
+    travel[1]=0.5 * ( (steps[0] * st_cfg.mot[0].units_per_step) - (steps[1] * st_cfg.mot[1].units_per_step) );
+    #endif
 }
