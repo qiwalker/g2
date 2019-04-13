@@ -28,11 +28,13 @@
 #ifndef KINEMATICS_H_ONCE
 #define KINEMATICS_H_ONCE
 
+/* JPC CoreXY kilematics test. Comment for cartesian*/
+#define COREXY
+
 /*
  * Global Scope Functions
  */
 
 void kn_inverse_kinematics(const float travel[], float steps[]);
 void kn_forward_kinematics(const float steps[], float travel[]);
-
 #endif  // End of include Guard: KINEMATICS_H_ONCE
